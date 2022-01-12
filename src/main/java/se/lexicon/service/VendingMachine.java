@@ -1,13 +1,14 @@
 package se.lexicon.service;
 
 import se.lexicon.model.Product;
+import se.lexicon.model.SWEDISH_DENOMINATION;
 
 public interface VendingMachine {
 
-    void addCurrency(int amount);
-    int getBalance();
+    void addCurrency(SWEDISH_DENOMINATION amount);
+    double getBalance();
     Product request(int id);
-    int endSession();
+    double endSession();
     String getDescription(int id);
     String[] getProducts();
 

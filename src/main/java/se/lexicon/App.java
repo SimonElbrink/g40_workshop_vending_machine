@@ -1,73 +1,62 @@
 package se.lexicon;
 
-import se.lexicon.model.Beverage;
-import se.lexicon.model.Fruit;
-import se.lexicon.model.Product;
-import se.lexicon.model.Snack;
+import se.lexicon.model.*;
 import se.lexicon.service.VendingMachine;
 import se.lexicon.service.VendingMachineImpl;
 
-/**
- * Hello world!
- *
- */
+
 public class App 
 {
+    static VendingMachine vendingMachine;
 
 
+    private static void initialize() {
+        Beverage cola = new Beverage(99, "Coca Cola", 20.00, false, 40);
+        Beverage colaZero = new Beverage(100, "Coca Cola Zero", 20.00, false, 0);
+        Beverage coffee = new Beverage(1, "Black Coffee", 10.00, false, 0);
+        Beverage beer = new Beverage(5, "Simple beer", 35.00, true, 10);
 
-    public static void main( String[] args )
-    {
+        Fruit bananaGreen = new Fruit(50, "Banana", 5.00, "Green");
+        Fruit bananaY = new Fruit(51, "Banana", 5.00, "Yellow");
+        Fruit bananaB = new Fruit(52, "Banana", 5.00, "Brown");
 
-        Beverage cola = new Beverage(99, "Coca Cola", 20, false, 40);
-        Beverage colaZero = new Beverage(100, "Coca Cola Zero", 20, false, 0);
-        Beverage coffee = new Beverage(1, "Black Coffee", 10, false, 0);
-        Beverage beer = new Beverage(5, "Simple beer", 35, true, 10);
-
-        Fruit bananaGreen = new Fruit(50, "Banana", 5, "Green");
-        Fruit bananaY = new Fruit(51, "Banana", 5, "Yellow");
-        Fruit bananaB = new Fruit(52, "Banana", 5, "Brown");
-
-        Snack mars = new Snack(10, 15, "mars bar");
-        Snack snickers = new Snack(11, 15, "snickers bar");
-
+        Snack mars = new Snack(10, 15.00, "mars bar");
+        Snack snickers = new Snack(11, 15.00, "snickers bar");
 
         //Init products
         Product[] products = {cola, colaZero, coffee, beer, bananaGreen, bananaY, bananaB, mars, snickers};
-        VendingMachine vendingMachine = new VendingMachineImpl(products);
+        vendingMachine = new VendingMachineImpl(products);
+    }
 
-        //Init vendingMachine
+    public static void main(String[] args )
+    {
+        initialize();
+
+        System.out.println("--- Inspect all the products ---");
         String[] productsInVM = vendingMachine.getProducts();
         for (String string : productsInVM) {
             System.out.println(string);
-            System.out.println("---");
         }
 
-
-
-
+        System.out.println("\n--- Inspect a specific product --- ");
         String coffeeInfo = vendingMachine.getDescription(1);
-
         System.out.println("coffeeInfo = " + coffeeInfo);
 
-        vendingMachine.addCurrency(500);
-
+        System.out.println("\n--- Add "+ SWEDISH_DENOMINATION.SEK_500.getVALUE() +" to the Machine ---");
+        vendingMachine.addCurrency(SWEDISH_DENOMINATION.SEK_500);
         System.out.println("Balance: " + vendingMachine.getBalance());
 
-        System.out.println(vendingMachine.request(1).use());
-
+        System.out.println("\n--- Request to Buy a product ---");
+        System.out.println(vendingMachine.getDescription(1));
         System.out.println("Balance: " + vendingMachine.getBalance());
+        Product myCoffee = vendingMachine.request(1);
+        System.out.println("Balance: " + vendingMachine.getBalance());
+        System.out.println(myCoffee.use());
 
-        int returnMoney = vendingMachine.endSession();
-
+        System.out.println("\n--- End Session = Return Money ---");
+        double returnMoney = vendingMachine.endSession();
         System.out.println("returnMoney = " + returnMoney);
-
         System.out.println("Balance: " + vendingMachine.getBalance());
-
-
-
-
-
 
     }
 }

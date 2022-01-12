@@ -1,26 +1,25 @@
 package se.lexicon.service;
 
 import se.lexicon.model.Product;
+import se.lexicon.model.SWEDISH_DENOMINATION;
 
 
 public class VendingMachineImpl implements VendingMachine{
 
-    private final int[] VALID_DENOMINATIONS = {1,2,5,10,20,50,100,200,500,1000};
     private Product[] products;
-    private int depositPool;
+    private double depositPool;
 
     public VendingMachineImpl(Product[] products) {
         this.products = products;
     }
 
-
     @Override
-    public void addCurrency(int amount) {
+    public void addCurrency(SWEDISH_DENOMINATION amount) {
         //If amount matching valid Denomination allow adding.
         boolean match = false;
-        for (int validDenomination : VALID_DENOMINATIONS) {
+        for (SWEDISH_DENOMINATION validDenomination : SWEDISH_DENOMINATION.values()) {
             if (validDenomination == amount){
-                depositPool += amount;
+                depositPool += amount.getVALUE();
                 match = true;
             }
         }
@@ -30,7 +29,7 @@ public class VendingMachineImpl implements VendingMachine{
     }
 
     @Override
-    public int getBalance() {
+    public double getBalance() {
         return depositPool;
     }
 
@@ -43,7 +42,7 @@ public class VendingMachineImpl implements VendingMachine{
         for (Product product : products) {
             if (product.getId() == id){
                 if ( product.getPrice() <= depositPool){
-                    depositPool = (int) (depositPool - product.getPrice());
+                    depositPool = (depositPool - product.getPrice());
                     return product;
                 }else{
                     throw new IllegalArgumentException(product.getProductName() + "was to Expensive");
@@ -55,8 +54,8 @@ public class VendingMachineImpl implements VendingMachine{
     }
 
     @Override
-    public int endSession() {
-        int balanceToReturn = depositPool;
+    public double endSession() {
+        double balanceToReturn = depositPool;
         depositPool = 0;
         return balanceToReturn;
     }
