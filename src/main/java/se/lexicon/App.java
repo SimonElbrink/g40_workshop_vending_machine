@@ -20,8 +20,8 @@ public class App
         Fruit bananaY = new Fruit(51, "Banana", 5.00, "Yellow");
         Fruit bananaB = new Fruit(52, "Banana", 5.00, "Brown");
 
-        Snack mars = new Snack(10, 15.00, "mars bar");
-        Snack snickers = new Snack(11, 15.00, "snickers bar");
+        Snack mars = new Snack(10, "mars bar", 15.00);
+        Snack snickers = new Snack(11, "snickers bar", 15.00);
 
         //Init products
         Product[] products = {cola, colaZero, coffee, beer, bananaGreen, bananaY, bananaB, mars, snickers};

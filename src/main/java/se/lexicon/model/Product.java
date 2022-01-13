@@ -1,23 +1,42 @@
 package se.lexicon.model;
 
-//Contract for a product, if you want to create a product you need impl these methods.
-public interface Product {
 
-//    static final int NUMBER = 123;
-//
-//    default void foo(){
-//
-//        int numbers = 1928;
-//
-//        System.out.println(numbers);
-//    }
+public abstract class Product {
 
-    String examine();
-    String use();
-    int getId();
-    String getProductName();
-    void setProductName(String productName);
-    double getPrice();
-    void setPrice(double price);
+    private int id;
+    private String productName;
+    private double price;
 
+    public abstract String examine();
+    public abstract String use();
+
+    public Product(int id, String productName, double price) {
+        this.id = id;
+        this.productName = productName;
+        this.price = price;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 }
